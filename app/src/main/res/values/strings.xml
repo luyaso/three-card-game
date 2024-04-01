@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Monty</string>
+    <string name="home">HOME</string>
+    <string name="game">GAME</string>
+    <string name="stat">STAT</string>
+    <string name="settings">SETTINGS</string>
 </resources>
