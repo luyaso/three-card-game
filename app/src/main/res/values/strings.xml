@@ -4,4 +4,5 @@
     <string name="game">GAME</string>
     <string name="stat">STAT</string>
     <string name="settings">SETTINGS</string>
+    <string name="play">PLAY</string>
 </resources>

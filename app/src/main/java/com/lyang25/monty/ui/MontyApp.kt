@@ -40,6 +40,7 @@ fun MontyNavHost(
         ) {
             HomeScreen(
                 navToGameScreen = {
+                    viewModel.newGame()
                     navController.navigate(GameDestination.route)
                 },
                 navToStatScreen = {
@@ -63,6 +64,10 @@ fun MontyNavHost(
                     //viewModel.answerQuestion(index = it)
                     navController.navigate(StatDestination.route)
                 },
+                resetScreen = {
+                    viewModel.newGame()
+                    navController.navigate(GameDestination.route)
+                }
             )
         }
 
