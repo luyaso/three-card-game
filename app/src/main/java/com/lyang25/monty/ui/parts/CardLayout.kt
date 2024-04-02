@@ -1,6 +1,7 @@
 package com.lyang25.monty.ui.parts
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,23 +14,31 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lyang25.monty.R
+import com.lyang25.monty.game.GameCard
 import com.lyang25.monty.ui.theme.MontyTheme
 
 @Composable
 fun CardRow(
-    segCard: List<Boolean>
+    segCard: List<GameCard>
 ) {
+
+    var imgResource = R.drawable.card_back
+
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         for (card in segCard) {
-            if (card) {
+            if (card.value) {
                 Image(
                     painterResource(
-                        id = R.drawable.ace_spades
+                        id = imgResource
                     ),
-                    modifier = Modifier.width(144.dp),
+                    modifier = Modifier
+                        .width(144.dp)
+                        .clickable {
+                            imgResource = R.drawable.ace_spades
+                        },
                     contentDescription = null
                 )
             } else {
@@ -47,7 +56,7 @@ fun CardRow(
 
 @Composable
 fun CardLayout(
-    cards: List<Boolean>,
+    cards: List<GameCard>,
 ) {
     Column() {
         Box (
@@ -87,8 +96,8 @@ fun CardLayout(
 @Composable
 fun CardLayoutPreview() {
     MontyTheme {
-        CardLayout(
-              cards = listOf(true, false, false, false, false)
-        )
+//        CardLayout(
+//              cards = listOf(true, false, false, false, false)
+//        )
     }
 }

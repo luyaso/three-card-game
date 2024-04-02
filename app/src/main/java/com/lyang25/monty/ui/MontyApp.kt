@@ -67,6 +67,12 @@ fun MontyNavHost(
                 resetScreen = {
                     viewModel.newGame()
                     navController.navigate(GameDestination.route)
+                },
+                onCardTap = {
+                    viewModel.onTap(index = it)
+                },
+                checkForMatch = {
+                    viewModel.checkForMatch()
                 }
             )
         }
@@ -78,6 +84,10 @@ fun MontyNavHost(
                 navToHomeScreen = {
                     navController.navigate(HomeDestination.route)
                 },
+                gameState = gameState,
+                onAnswer = {
+                    viewModel.changeTwist(it)
+                }
             )
         }
 

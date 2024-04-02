@@ -85,7 +85,7 @@ fun HomeScreen(
             Button(
                 onClick = navToStatScreen
             ) {
-                Text(stringResource(id = R.string.stat))
+                Text(stringResource(id = R.string.statistics))
             }
         }
     }

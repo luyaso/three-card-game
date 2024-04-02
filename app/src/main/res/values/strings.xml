@@ -5,4 +5,9 @@
     <string name="stat">STAT</string>
     <string name="settings">SETTINGS</string>
     <string name="play">PLAY</string>
+    <string name="reset">RESET</string>
+    <string name="statistics">STATISTICS</string>
+    <string name="question">How many cards would you like to play MONTY with?</string>
+    <string name="save">SAVE</string>
+    <string name="back">BACK</string>
 </resources>

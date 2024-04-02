@@ -2,35 +2,39 @@ package com.lyang25.monty.ui
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import com.lyang25.monty.game.GameCard
+import com.lyang25.monty.game.Monty
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 class MontyViewModel(app: Application) : AndroidViewModel(app) {
 
+    private val monty = Monty()
+
     private val _gameState = MutableStateFlow(GameState())
     val gameState: StateFlow<GameState> = _gameState
 
     init {
-        //do stuff
+        newGame()
+    }
+
+    private fun updateState() {
+        _gameState.value = _gameState.value.copy(
+            cards = monty.cards,
+            twist = monty.twist,
+        )
     }
 
     fun newGame() {
-        val myList = when (_gameState.value.twist) {
-            4 -> mutableListOf(true, false, false, false)
-            5 -> mutableListOf(true, false, false, false, false)
-            else -> mutableListOf(true, false, false)
-        }
-        myList.shuffle()
+        monty.newGame()
 
-        _gameState.value = _gameState.value.copy(
-            cards = myList
-        )
+        endGame(false)
+        updateState()
     }
 
     fun changeTwist(index: Int) {
-        _gameState.value = _gameState.value.copy(
-            twist = index
-        )
+        monty.twist = index
+        updateState()
     }
 
     fun endGame(win: Boolean) {
@@ -45,13 +49,30 @@ class MontyViewModel(app: Application) : AndroidViewModel(app) {
             gamesWon = newWon,
             gamesPlayed = newPlayed
         )
+
+        updateState()
+    }
+
+    fun onTap(index: Int) {
+        monty.evaluateClick(index)
+        updateState()
+    }
+
+    fun checkForMatch() {
+        monty.checkForMatch()
+
+        _gameState.value = _gameState.value.copy(
+            gamesWon = if (monty.win) _gameState.value.gamesWon + 1 else _gameState.value.gamesWon,
+            gamesPlayed = _gameState.value.gamesPlayed + 1
+        )
+        updateState()
     }
 }
 
 data class GameState(
     val temp: String = "",
     val twist: Int = 3,
-    val cards: List<Boolean> = emptyList(),
+    val cards: List<GameCard> = emptyList(),
     val gamesWon: Int = 0,
     val gamesPlayed: Int = 0,
 )
