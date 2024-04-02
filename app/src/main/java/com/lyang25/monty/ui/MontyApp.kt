@@ -98,6 +98,7 @@ fun MontyNavHost(
                 navToHomeScreen = {
                     navController.navigate(HomeDestination.route)
                 },
+                gameState = gameState,
             )
         }
     }

@@ -1,5 +1,8 @@
 package com.lyang25.monty.ui.screens
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +17,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -47,6 +54,14 @@ fun GameScreen(
         checkForMatch()
     }
 
+    val appear by animateFloatAsState(
+        targetValue = if (true) 1f else 0f,
+        animationSpec = tween(Monty.FLIP_DURATION, easing = FastOutSlowInEasing),
+        label = "appear"
+    )
+
+    var clicked by remember { mutableStateOf(true) }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -65,19 +80,29 @@ fun GameScreen(
                 items(gameState.cards) { item ->
                     CardView(
                         card = item,
-                        onTap = onCardTap,
+                        onTap = {
+                            onCardTap(it)
+                            clicked = false
+                                },
                         cardScale = when (gameState.twist) {
                             5 -> 0.75f
                             else -> 0.95f
-                        }
+                        },
+                        isClickable = clicked
                     )
                 }
             }
         }
 
+        Box(
+            modifier = Modifier.weight(1f)
+        ) {
+            // Win/lose text
+        }
+
         Row(
             modifier = Modifier
-                .weight(2f)
+                .weight(1f)
                 .fillMaxWidth()
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
@@ -93,6 +118,12 @@ fun GameScreen(
                 onClick = resetScreen
             ) {
                 Text(stringResource(id = R.string.reset))
+            }
+
+            Button(
+                onClick = navToStatScreen
+            ) {
+                Text(stringResource(id = R.string.statistics))
             }
         }
     }

@@ -10,4 +10,7 @@
     <string name="question">How many cards would you like to play MONTY with?</string>
     <string name="save">SAVE</string>
     <string name="back">BACK</string>
+    <string name="gamesplayed">"Games played: "</string>
+    <string name="gameswon">"Games won: "</string>
+    <string name="statscreen">Your MONTY game statistics:</string>
 </resources>

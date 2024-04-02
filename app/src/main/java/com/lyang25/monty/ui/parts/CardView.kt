@@ -29,6 +29,7 @@ fun CardView(
     card: GameCard,
     onTap: (Int) -> Unit,
     cardScale: Float,
+    isClickable: Boolean,
 ) {
     val flip by animateFloatAsState(
         targetValue = if (card.faceUp) 180f else 0f,
@@ -51,7 +52,6 @@ fun CardView(
     Box(
         Modifier
             .fillMaxSize(),
-//            .alpha(if (card.solved) 0f else 1f),
         contentAlignment = Alignment.Center
     ) {
         Card(
@@ -60,10 +60,9 @@ fun CardView(
                 .graphicsLayer {
                     rotationY = flip
                 }
-                .clickable {
+                .clickable(enabled = isClickable) {
                     onTap(card.index)
                 },
-//            shape = RoundedCornerShape(21.dp),
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -100,5 +99,7 @@ fun CardViewPreview() {
     CardView(
         card = GameCard(index = 0, value = false, faceUp = false),
         onTap = {},
-        cardScale = 0.95f)
+        cardScale = 0.95f,
+        isClickable = true
+    )
 }

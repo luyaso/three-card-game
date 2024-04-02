@@ -14,9 +14,9 @@ class MontyViewModel(app: Application) : AndroidViewModel(app) {
     private val _gameState = MutableStateFlow(GameState())
     val gameState: StateFlow<GameState> = _gameState
 
-    init {
-        newGame()
-    }
+//    init {
+//        newGame()
+//    }
 
     private fun updateState() {
         _gameState.value = _gameState.value.copy(
@@ -27,8 +27,6 @@ class MontyViewModel(app: Application) : AndroidViewModel(app) {
 
     fun newGame() {
         monty.newGame()
-
-        endGame(false)
         updateState()
     }
 
@@ -37,34 +35,18 @@ class MontyViewModel(app: Application) : AndroidViewModel(app) {
         updateState()
     }
 
-    fun endGame(win: Boolean) {
-        val newWon = if (win) {
-            _gameState.value.gamesWon + 1
-        } else {
-            _gameState.value.gamesWon
-        }
-        val newPlayed = _gameState.value.gamesPlayed + 1
-
-        _gameState.value = _gameState.value.copy(
-            gamesWon = newWon,
-            gamesPlayed = newPlayed
-        )
-
-        updateState()
-    }
-
     fun onTap(index: Int) {
         monty.evaluateClick(index)
-        updateState()
-    }
-
-    fun checkForMatch() {
-        monty.checkForMatch()
 
         _gameState.value = _gameState.value.copy(
             gamesWon = if (monty.win) _gameState.value.gamesWon + 1 else _gameState.value.gamesWon,
             gamesPlayed = _gameState.value.gamesPlayed + 1
         )
+        updateState()
+    }
+
+    fun checkForMatch() {
+        monty.checkForMatch()
         updateState()
     }
 }
